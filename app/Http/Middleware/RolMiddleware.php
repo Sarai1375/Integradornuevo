@@ -7,15 +7,18 @@ use Illuminate\Http\Request;
 
 class RolMiddleware
 {
-    public function handle(Request $request, Closure $next, $rol)
+    public function handle(Request $request, Closure $next, ...$roles)
     {
-        // Verificar si hay sesión activa
-        if (!session()->has('usuario')) {
-            return redirect()->route('login');
+        if (!session('usuario_logueado')) {
+            return redirect()
+                ->route('login')
+                ->with('error', 'Debes iniciar sesión');
         }
 
-        // Verificar rol
-        if (session('usuario')->Rol !== $rol) {
+        $rolUsuario = strtolower(trim(session('rol', '')));
+        $rolesPermitidos = array_map(fn($r) => strtolower(trim($r)), $roles);
+
+        if (!in_array($rolUsuario, $rolesPermitidos)) {
             abort(403, 'No tienes permiso para acceder a esta sección');
         }
 
