@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\UsuarioApiController;
 use App\Http\Controllers\Api\InventarioApiController;
 use App\Http\Controllers\Api\EncuestaApiController;
 use App\Http\Controllers\Api\CarritoApiController;
+use App\Http\Controllers\Api\GeminiApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,3 +104,6 @@ Route::prefix('carrito')->group(function () {
     Route::match(['put', 'patch'], '/{id}', [CarritoApiController::class, 'update'])->whereNumber('id');
     Route::delete('/{id}', [CarritoApiController::class, 'destroy'])->whereNumber('id');
 });
+
+// Gemini (IA)
+Route::post('/gemini/chat', [GeminiApiController::class, 'chat']);

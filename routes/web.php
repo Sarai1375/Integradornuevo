@@ -19,6 +19,7 @@ use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\AdminPedidoController;
 use App\Http\Controllers\CodigoPostalController;
+use App\Http\Controllers\GeminiChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,10 @@ Route::post('/forgot-password', [UsuariosController::class, 'resetPassword'])
 
 // Códigos postales (consulta pública para formularios)
 Route::get('/buscar-cp/{cp}', [CodigoPostalController::class, 'buscar']);
+
+// Chat IA (Gemini)
+Route::get('/chat-ia', [GeminiChatController::class, 'index'])->name('chat.gemini');
+Route::post('/chat-ia/send', [GeminiChatController::class, 'send'])->name('chat.gemini.send');
 
 // Logout
 Route::post('/logout', function () {
